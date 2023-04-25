@@ -75,14 +75,16 @@ DynamicArray resize(DynamicArray da, int new_capacity) {
 
 void push_back_x2(DynamicArray& da, int val){
     int size = da.size;
-    da = resize(da, da.size * 2);
+    if (da.capacity < size + 1)
+        da = resize(da, da.size * 2);
     da.size = size + 1;
     da.elements[size] = val;
 }
 
 void push_back_1(DynamicArray& da, int val){
     int size = da.size;
-    da = resize(da, da.size + 1);
+    if (da.capacity < size + 1)
+        da = resize(da, da.size + 1);
     da.size = size + 1;
     da.elements[size] = val;
 }
@@ -103,9 +105,9 @@ int main() {
     long long t;
     clock_t end, begin;
     begin = clock();
-    for (int j = 10000; j <= 1000000; j = j + 10000) {
+    for (int j = 100000; j <= 10000000; j = j + 100000) {
         DynamicArray a = new_array(j, j);
-        for (int i = 0; i < 100; ++i)
+        for (int i = 0; i < 1000; ++i)
             push_back_1(a, 0);
         end = clock();
         t = (long long) (end - begin);
